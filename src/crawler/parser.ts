@@ -1,38 +1,31 @@
-import axios from "axios";
 import * as cheerio from "cheerio";
+import { MovieData } from "../contracts";
 
-interface MoviesData {
-    name: string;
-    year: number;
-    genres: string[];
-    rating: number;
-    synopsis: string;
-    directors: string[];
-    actors: string[];
-}
-
-export async function testCrawler() {
-    const { data: html } = await axios.get("https://www.imdb.com/search/title/?count=100&groups=top_1000&sort=user_rating");
+/**
+ * Extract information about the movies from a html document
+ * @param html The Html document to parse
+ * @returns An array containing the movies data found in the given html
+ */
+export function parseMoviePage(html: string): MovieData[] {
     const $ = cheerio.load(html);
-    const moviesData: MoviesData[] = [];
+    const moviesData: MovieData[] = [];
 
     $(".lister-item, .mode-advanced").each((_, item) => {
         const movieInfo = $(item).find(".lister-item-content");
 
         const header = movieInfo.find(".lister-item-header");
         const name = header.children("a").text();
-        const year = Number(header.children(".lister-item-year").text().replace(/\D/g, ""));
+        const year = header.children(".lister-item-year").text().replace(/\D/g, "");
 
         const subHeader = movieInfo.find(".text-muted");
         const genres = subHeader.children(".genre").text().trim().split(", ");
 
         const ratingsBar = movieInfo.find(".ratings-bar");
-        const rating = Number(ratingsBar.children(".ratings-imdb-rating").children("strong").text());
+        const rating = ratingsBar.children(".ratings-imdb-rating").children("strong").text();
 
         const synopsis = movieInfo.children().eq(3).text().trim();
 
         const directorsAndActors = movieInfo.children().eq(4).children();
-
         const directors: string[] = [];
         const actors: string[] = [];
         let state = "directors";
