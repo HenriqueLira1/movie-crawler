@@ -18,7 +18,9 @@ routes.post("/crawl-imdb", async (req, res) => {
 
 routes.get("/search/:searchTerm", async (req, res) => {
     if (isNull(movies) || isNull(movieIndex)) {
-        await populateMovieData();
+        return res
+            .status(400)
+            .json({ error: "IMDb movie pages not yet crawled!" });
     }
 
     const searchTerm = req.params.searchTerm;
