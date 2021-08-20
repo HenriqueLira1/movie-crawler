@@ -23,7 +23,9 @@ routes.get("/search/:searchTerm", async (req, res) => {
     const searchTerm = req.params.searchTerm;
     const foundMovies = movieIndex.searchMovies(searchTerm);
 
-    res.send(foundMovies);
+    const fondMoviesNames = foundMovies.map((movie) => movie.name);
+
+    res.send(fondMoviesNames);
 });
 
 export default routes;

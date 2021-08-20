@@ -88,10 +88,25 @@ export default class MovieIndex {
         const forwardIndex = new Map<number, Set<string>>();
 
         for (let index = 0; index < movies.length; index++) {
-            forwardIndex.set(index, generateTags(movies[index].actors));
+            forwardIndex.set(index, this.buildMovieTags(movies[index]));
         }
 
         return forwardIndex;
+    }
+
+    /**
+     * Extract tags from a movie object
+     * @param movie Movie to extract tags from
+     * @returns A set of movie tags
+     */
+    private buildMovieTags(movie: MovieData) {
+        return new Set([
+            ...generateTags(movie.name),
+            ...generateTags(movie.year),
+            ...generateTags(movie.genres),
+            ...generateTags(movie.directors),
+            ...generateTags(movie.actors),
+        ]);
     }
 
     /**

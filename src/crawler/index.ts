@@ -1,5 +1,4 @@
 import axios from "axios";
-import fs from "fs-extra";
 import { MovieData } from "../contracts";
 import { parseMoviePage } from "./parser";
 
@@ -27,16 +26,5 @@ export async function initCrawler() {
         moviesData = moviesData.concat(parsedMoviesData);
     }
 
-    await saveMoviesData(moviesData);
-
     return moviesData;
-}
-
-async function saveMoviesData(moviesData: MovieData[]) {
-    try {
-        await fs.writeJson("./movies-data.json", moviesData);
-        console.log("success!");
-    } catch (err) {
-        console.error(err);
-    }
 }
