@@ -13,7 +13,7 @@ docker-compose up -d
 
 ### 👨‍💻 Bootstrap (Local development)
 
-1. Install node 12, recomended to install via [nvm](https://github.com/nvm-sh/nvm).
+1. Install node 12 (recomended to install via [nvm](https://github.com/nvm-sh/nvm)).
 2. Install dependencies with `npm install`.
 3. Run the project with `npm run dev`.
 
@@ -79,9 +79,5 @@ curl \
 Example payload response:
 
 ```json
-[
-  "The Godfather: Part II",
-  "Heat",
-  "The Irishman"
-]
+["The Godfather: Part II", "Heat", "The Irishman"]
 ```
