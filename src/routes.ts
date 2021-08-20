@@ -1,4 +1,5 @@
 import { Router } from "express";
+import { isNull } from "lodash";
 import { movieIndex, movies, populateMovieData } from "./movie-storage";
 
 const routes = Router();
@@ -8,15 +9,15 @@ routes.get("/", async (_, res) => {
 });
 
 routes.post("/crawl-imdb", async (req, res) => {
-    if (!movies || !movieIndex) {
+    if (isNull(movies) || isNull(movieIndex)) {
         await populateMovieData();
     }
 
-    res.send({ success: true });
+    return res.json({ success: true });
 });
 
 routes.get("/search/:searchTerm", async (req, res) => {
-    if (!movies || !movieIndex) {
+    if (isNull(movies) || isNull(movieIndex)) {
         await populateMovieData();
     }
 
@@ -25,7 +26,7 @@ routes.get("/search/:searchTerm", async (req, res) => {
 
     const fondMoviesNames = foundMovies.map((movie) => movie.name);
 
-    res.send(fondMoviesNames);
+    return res.json(fondMoviesNames);
 });
 
 export default routes;
