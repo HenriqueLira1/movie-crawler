@@ -11,12 +11,12 @@ export default class MovieIndex {
     }
 
     /**
-     * Searches for movies from given user input
-     * @param userInput User input to query
-     * @returns The found movies from the generated user input tags
+     * Searches for movies from given search term
+     * @param searchTerm search term to query
+     * @returns The found movies from the generated search term tags
      */
-    public searchMovies(userInput: string): MovieData[] {
-        const inputTags = generateTags(userInput);
+    public searchMovies(searchTerm: string): MovieData[] {
+        const inputTags = generateTags(searchTerm);
         const commonIndexes = this.getIndexes(inputTags);
 
         const foundMovies: MovieData[] = [];

@@ -3,6 +3,10 @@ import fs from "fs-extra";
 import { MovieData } from "../contracts";
 import { parseMoviePage } from "./parser";
 
+/**
+ * Extracts movie data from the top 1000 movies from imdb
+ * @returns The extracted movies data
+ */
 export async function initCrawler() {
     let moviesData: MovieData[] = [];
 

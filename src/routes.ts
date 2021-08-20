@@ -3,6 +3,10 @@ import { movieIndex, movies, populateMovieData } from "./movie-storage";
 
 const routes = Router();
 
+routes.get("/", async (_, res) => {
+    res.send({ ok: true });
+});
+
 routes.post("/crawl-imdb", async (req, res) => {
     if (!movies || !movieIndex) {
         await populateMovieData();
@@ -12,7 +16,6 @@ routes.post("/crawl-imdb", async (req, res) => {
 });
 
 routes.get("/search/:searchTerm", async (req, res) => {
-    // const moviesData = await readMoviesData();
     if (!movies || !movieIndex) {
         await populateMovieData();
     }
